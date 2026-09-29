@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>X Image Downloader</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="panel">
+    <header class="header">
+      <div>
+        <h1>X Image Downloader</h1>
+        <p id="pageContext">Checking current X tab…</p>
+      </div>
+
+      <label class="switch-row" title="Turn image download buttons on or off">
+        <span id="toggleLabel">ON</span>
+        <input id="enabledToggle" type="checkbox" checked>
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+    </header>
+
+    <section class="section">
+      <h2>Download behavior</h2>
+      <select id="downloadMode" aria-label="Download behavior">
+        <option value="firefox">Use Firefox download folder</option>
+        <option value="saveAs">Ask where to save</option>
+      </select>
+      <p id="downloadModeNote" class="note compact-note">One click, no picker.</p>
+    </section>
+
+    <section class="section" id="searchSection">
+      <div class="section-title-row">
+        <h2>Search this profile</h2>
+        <span id="profileName" class="pill">—</span>
+      </div>
+
+      <div class="date-grid">
+        <label>
+          From
+          <div class="date-input-wrap">
+            <input id="fromDate" type="text" inputmode="numeric" autocomplete="off"
+                   maxlength="10" placeholder="YYYY-MM-DD">
+            <button class="calendar-open" data-target="fromDate" type="button"
+                    aria-label="Choose From date">▦</button>
+          </div>
+        </label>
+
+        <label>
+          To
+          <div class="date-input-wrap">
+            <input id="toDate" type="text" inputmode="numeric" autocomplete="off"
+                   maxlength="10" placeholder="YYYY-MM-DD">
+            <button class="calendar-open" data-target="toDate" type="button"
+                    aria-label="Choose To date">▦</button>
+          </div>
+        </label>
+      </div>
+
+      <button id="searchButton" class="primary" type="button">Search Date Range</button>
+      <p id="searchNote" class="note">Opens the selected date range in X's Latest results, beside the current tab.</p>
+    </section>
+
+    <section class="section hidden" id="videoSection">
+      <h2>Video tools</h2>
+
+      <div id="singleVideoTools" class="tool-group hidden">
+        <div class="tool-label">Current video post</div>
+        <button id="copyVideo" class="primary full-width" type="button">
+          Copy yt-dlp command
+        </button>
+      </div>
+
+      <div id="batchVideoTools" class="tool-group hidden">
+        <div id="batchLabel" class="tool-label">Selected video tabs</div>
+
+        <div class="batch-actions">
+          <button id="downloadBatchList" class="primary" type="button">
+            Download URL List (.txt)
+          </button>
+        </div>
+
+        <div id="batchCommandWrap" class="batch-command-wrap hidden">
+          <label for="batchCommandField">Batch command</label>
+          <div class="batch-command-row">
+            <input id="batchCommandField" type="text" readonly value="">
+            <button id="copyBatchFileCommand" class="secondary" type="button">
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <p id="batchNote" class="note"></p>
+      </div>
+    </section>
+
+    <div id="status" class="status" role="status" aria-live="polite">Ready.</div>
+
+    <details class="about">
+      <summary>About</summary>
+      <div class="about-content">
+        <div class="about-row">
+          <span>Version</span>
+          <strong id="versionDisplay">—</strong>
+        </div>
+
+        <div class="about-row">
+          <span>GitHub</span>
+          <a id="githubProfile"
+             href="https://github.com/Tomoya404"
+             target="_blank"
+             rel="noopener noreferrer">
+            @Tomoya404
+          </a>
+        </div>
+
+        <div class="diagnostics">
+          <label class="diagnostic-toggle">
+            <input id="debugToggle" type="checkbox">
+            <span>Enable debug logging</span>
+          </label>
+
+          <p class="note">
+            Off by default. Logs stay in Firefox extension storage and never include cookies or X authentication tokens.
+          </p>
+
+          <div class="diagnostic-actions">
+            <button id="copyDebugReport"
+                    class="secondary"
+                    type="button">
+              Copy debug report
+            </button>
+
+            <button id="clearDebugLog"
+                    class="secondary"
+                    type="button">
+              Clear log
+            </button>
+          </div>
+        </div>
+      </div>
+    </details>
+  </main>
+
+  <div id="calendarOverlay" class="calendar-overlay hidden" aria-hidden="true">
+    <div class="calendar-card" role="dialog" aria-modal="true" aria-label="Choose date">
+      <div class="calendar-head">
+        <button id="calendarPrev" type="button" aria-label="Previous month">‹</button>
+        <strong id="calendarTitle"></strong>
+        <button id="calendarNext" type="button" aria-label="Next month">›</button>
+      </div>
+
+      <div class="weekdays">
+        <span>Su</span><span>Mo</span><span>Tu</span>
+        <span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+      </div>
+
+      <div id="calendarGrid" class="calendar-grid"></div>
+
+      <div class="calendar-actions">
+        <button id="calendarClear" type="button">Clear</button>
+        <button id="calendarToday" type="button">Today</button>
+        <button id="calendarClose" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

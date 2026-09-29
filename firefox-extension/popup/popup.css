@@ -1,0 +1,238 @@
+:root { color-scheme: dark; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background:#0f1419; color:#e7e9ea; }
+* { box-sizing:border-box; }
+body { margin:0; width:382px; background:#0f1419; }
+.panel { padding:14px; }
+.header { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding-bottom:12px; }
+h1 { margin:0; font-size:17px; line-height:1.2; }
+.header p { margin:4px 0 0; color:#71767b; font-size:12px; max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.section { border-top:1px solid #2f3336; padding:13px 0; }
+h2 { margin:0 0 10px; font-size:13px; }
+.section-title-row { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.pill { font-size:11px; color:#8b98a5; background:#202327; border:1px solid #2f3336; padding:3px 7px; border-radius:999px; max-width:165px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.date-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:9px; }
+.date-grid label { color:#8b98a5; font-size:11px; }
+.date-input-wrap { display:grid; grid-template-columns:minmax(0,1fr) 34px; margin-top:5px; border:1px solid #33383d; border-radius:8px; background:#16181c; overflow:hidden; }
+.date-input-wrap:focus-within { border-color:#1d9bf0; box-shadow:0 0 0 1px #1d9bf0; }
+.date-input-wrap input { min-width:0; width:100%; border:0; outline:0; background:transparent; color:#e7e9ea; font:inherit; font-size:12px; padding:8px; }
+.date-input-wrap .calendar-open { min-height:0; border:0; border-left:1px solid #33383d; border-radius:0; padding:0; background:#202327; }
+button { min-height:34px; border:1px solid #33383d; border-radius:8px; background:#202327; color:#e7e9ea; font:600 12px inherit; cursor:pointer; padding:7px 10px; }
+button:hover:not(:disabled) { background:#2a2e32; }
+button:disabled { opacity:.45; cursor:not-allowed; }
+button.primary { background:#1d9bf0; border-color:#1d9bf0; color:white; }
+button.primary:hover:not(:disabled) { background:#1a8cd8; }
+#searchButton { width:100%; }
+.button-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+.tool-group + .tool-group { margin-top:12px; padding-top:12px; border-top:1px solid #2f3336; }
+.tool-label { font-size:12px; font-weight:600; margin-bottom:7px; }
+.note { margin:7px 0 0; font-size:11px; color:#71767b; line-height:1.35; }
+.status { min-height:30px; padding:8px 9px; border-radius:8px; background:#16181c; color:#8b98a5; font-size:11px; line-height:1.35; }
+.hidden { display:none !important; }
+.switch-row { display:flex; align-items:center; gap:7px; cursor:pointer; font-size:11px; font-weight:700; }
+.switch-row input { position:absolute; opacity:0; pointer-events:none; }
+.switch { width:36px; height:20px; border-radius:999px; background:#536471; position:relative; transition:.15s; }
+.switch::after { content:""; position:absolute; width:16px; height:16px; border-radius:50%; background:white; left:2px; top:2px; transition:.15s; }
+.switch-row input:checked + .switch { background:#1d9bf0; }
+.switch-row input:checked + .switch::after { transform:translateX(16px); }
+.calendar-overlay { position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,.56); display:flex; align-items:center; justify-content:center; padding:14px; }
+.calendar-card { width:100%; max-width:330px; background:#16181c; border:1px solid #3b4146; border-radius:12px; padding:10px; box-shadow:0 12px 36px rgba(0,0,0,.5); }
+.calendar-head { display:grid; grid-template-columns:36px 1fr 36px; align-items:center; gap:6px; margin-bottom:8px; }
+.calendar-head strong { text-align:center; font-size:13px; }
+.calendar-head button { min-height:32px; padding:0; font-size:19px; }
+.weekdays,.calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+.weekdays { margin-bottom:4px; color:#71767b; font-size:10px; text-align:center; }
+.calendar-day { min-height:32px; padding:0; border-radius:7px; border:1px solid transparent; background:transparent; font-weight:500; }
+.calendar-day:hover { background:#202327 !important; }
+.calendar-day.other { color:#536471; }
+.calendar-day.selected { background:#1d9bf0 !important; color:#fff; }
+.calendar-day.today { border-color:#536471; }
+.calendar-actions { display:flex; gap:6px; justify-content:flex-end; margin-top:9px; }
+.calendar-actions button { min-height:31px; padding:5px 9px; }
+
+
+/* v2.0.2 compact download-mode selector */
+#downloadMode {
+  width:100%;
+  min-height:36px;
+  border:1px solid #33383d;
+  border-radius:8px;
+  background:#16181c;
+  color:#e7e9ea;
+  font:600 12px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding:7px 34px 7px 10px;
+  outline:none;
+}
+#downloadMode:focus {
+  border-color:#1d9bf0;
+  box-shadow:0 0 0 1px #1d9bf0;
+}
+.compact-note { margin-top:6px; }
+
+.full-width { width:100%; }
+
+
+/* v2.2.0 compact batch tools */
+.batch-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin-top: 7px;
+}
+
+.batch-actions button {
+  min-width: 0;
+  min-height: 36px;
+  padding: 7px 8px;
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.secondary {
+  border: 1px solid #536471;
+  border-radius: 8px;
+  background: #202327;
+  color: #eff3f4;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.secondary:hover {
+  background: #2f3336;
+}
+
+/* Compact About section: collapsed by default so it uses almost no space. */
+.about {
+  margin-top: 10px;
+  border-top: 1px solid #2f3336;
+  color: #8b98a5;
+}
+
+.about summary {
+  cursor: pointer;
+  padding: 9px 0 2px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #8b98a5;
+  user-select: none;
+}
+
+.about summary:hover {
+  color: #e7e9ea;
+}
+
+.about-content {
+  padding: 7px 0 2px;
+  display: grid;
+  gap: 6px;
+}
+
+.about-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  font-size: 11px;
+}
+
+.about-row strong {
+  color: #e7e9ea;
+}
+
+.about-row a {
+  color: #1d9bf0;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.about-row a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 330px) {
+  .batch-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* v2.2.1 batch-file command UI */
+.batch-command-wrap {
+  margin-top: 9px;
+}
+
+.batch-command-wrap label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 11px;
+  color: #8b98a5;
+  font-weight: 700;
+}
+
+.batch-command-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px;
+}
+
+#batchCommandField {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #33383d;
+  border-radius: 8px;
+  background: #16181c;
+  color: #e7e9ea;
+  padding: 7px 9px;
+  font: 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  outline: none;
+}
+
+#batchCommandField:focus {
+  border-color: #1d9bf0;
+}
+
+#copyBatchFileCommand {
+  min-height: 34px;
+  padding: 6px 10px;
+}
+
+
+.diagnostics {
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px solid #2f3336;
+}
+
+.diagnostic-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e7e9ea;
+  font-size: 11px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.diagnostic-toggle input {
+  width: 14px;
+  height: 14px;
+  accent-color: #1d9bf0;
+}
+
+.diagnostic-actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.diagnostic-actions button {
+  min-height: 32px;
+  padding: 6px 8px;
+  font-size: 10px;
+}
+
+@media (max-width: 330px) {
+  .diagnostic-actions {
+    grid-template-columns: 1fr;
+  }
+}
