@@ -157,4 +157,4 @@ The popup handles download preferences, date-range search, video detection, batc
 7. Select `firefox-extension/manifest.json`.
 8. Reload existing X/Twitter tabs.
 
-Temporary add-ons are removed when Firefox fully restarts. A signed `.xpi` will be used for permanent installation later.
+Temporary add-ons are removed when Firefox fully restarts.
