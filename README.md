@@ -146,7 +146,7 @@ X-Image-Downloader/
 
 The popup handles download preferences, date-range search, video detection, batch URL-list generation, and command copying.
 
-## Temporary installation for testing
+## Development installation
 
 1. Extract the release ZIP.
 2. Open Firefox.
